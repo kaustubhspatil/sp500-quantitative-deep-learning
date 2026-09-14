@@ -59,7 +59,7 @@ python predict.py --top 10     # today's signal, straight from raw prices
 ## Repository layout
 
 ```
-capstone/
+.
 ├── data/
 │   ├── sp500_stocks.csv          ← raw daily OHLCV, 50 tickers, 2005–2025
 │   ├── vix.csv, treasury_10y.csv ← market context series
@@ -79,6 +79,21 @@ capstone/
 ├── runs/                         ← TensorBoard logs (tensorboard --logdir=runs)
 └── README.md
 ```
+
+## The notebooks
+
+Every notebook is committed with its outputs, so the results are readable without running anything.
+
+| Notebook | What it covers | Fast view |
+|---|---|---|
+| [`01_eda.ipynb`](notebooks/01_eda.ipynb) | two decades of market structure, and what it implies | [open](https://nbviewer.org/github/kaustubhspatil/sp500-quantitative-deep-learning/blob/main/notebooks/01_eda.ipynb) |
+| [`02_preprocessing.ipynb`](notebooks/02_preprocessing.ipynb) | 17 leak-free features, temporal splits, scaling | [open](https://nbviewer.org/github/kaustubhspatil/sp500-quantitative-deep-learning/blob/main/notebooks/02_preprocessing.ipynb) |
+| [`03_feedforward_nn.ipynb`](notebooks/03_feedforward_nn.ipynb) | linear incumbent vs feedforward networks | [open](https://nbviewer.org/github/kaustubhspatil/sp500-quantitative-deep-learning/blob/main/notebooks/03_feedforward_nn.ipynb) |
+| [`04_sequence_models.ipynb`](notebooks/04_sequence_models.ipynb) | LSTM + 1D CNN, walk-forward validation | [open](https://nbviewer.org/github/kaustubhspatil/sp500-quantitative-deep-learning/blob/main/notebooks/04_sequence_models.ipynb) |
+| [`05_transfer_learning.ipynb`](notebooks/05_transfer_learning.ipynb) | ResNet-18 on chart images + Grad-CAM | [open](https://nbviewer.org/github/kaustubhspatil/sp500-quantitative-deep-learning/blob/main/notebooks/05_transfer_learning.ipynb) |
+| [`06_backtest.ipynb`](notebooks/06_backtest.ipynb) | $1M, 10 bps costs, verdict | [open](https://nbviewer.org/github/kaustubhspatil/sp500-quantitative-deep-learning/blob/main/notebooks/06_backtest.ipynb) |
+
+> GitHub renders large notebooks slowly and sometimes gives up with *"Sorry, something went wrong."* The **Fast view** column opens the same file through nbviewer, which loads reliably.
 
 ## Reproduce end-to-end
 
@@ -101,14 +116,13 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 **2. Run the notebooks in order** (each persists what the next one loads):
 
 ```bash
-cd capstone
 jupyter notebook   # run 01 → 06 top to bottom
 ```
 
 Or headless:
 
 ```bash
-cd capstone/notebooks
+cd notebooks
 for nb in 01_eda 02_preprocessing 03_feedforward_nn 04_sequence_models 05_transfer_learning 06_backtest; do
     python -m nbconvert --to notebook --execute --inplace $nb.ipynb
 done
